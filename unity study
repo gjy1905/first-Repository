@@ -1,0 +1,62 @@
+创建UI即开始页面，实现场景切换，添加背景音乐的功能：
+首先应该定义开始页面的按钮及组件：
+
+          //定义声音按钮
+          private Button btnSound;
+          //定义开始按钮
+          private Button btnPlay;
+
+          //创建声音组件
+          private AudioSource audioSourceBg;
+          //创建图片组件
+          private Image imageSound;
+
+          //声音的图片是一个数组
+          public Sprite[] soundSprites;
+          
+ 在start函数里初始化一些方法，但是方法别写在start函数里，保证start函数看起来简洁直观：
+  	void Start () {
+        //获取组件
+          getComponents ();
+        //添加按钮点击事件
+          btnPlay.onClick.AddListener (OnPlayClick);
+          btnSound.onClick.AddListener (OnSoundClick);
+    }
+    
+  接下来写具体的方法是怎么实现的：
+  
+  //移除事件
+	void OnDestroy()
+	{
+		btnPlay.onClick.RemoveListener (OnPlayClick);
+		btnSound.onClick.RemoveListener (OnSoundClick);
+	}
+
+	//获取按钮组件
+	private void getComponents()
+	{
+		btnPlay = transform.Find ("btnPlay").GetComponent<Button> ();
+		btnSound = transform.Find ("btnSound").GetComponent<Button> ();
+		audioSourceBg = transform.Find ("btnSound").GetComponent<AudioSource> ();
+		imageSound = transform.Find ("btnSound").GetComponent<Image> ();
+	}
+
+	// 当开始按钮按下时的点击事件
+	void OnPlayClick()
+	{
+		SceneManager.LoadScene ("play",LoadSceneMode.Single);	
+	}
+
+	//当声音按钮按下时
+	void OnSoundClick()
+	{
+		if (audioSourceBg.isPlaying) {
+			//正在播放就让他停止
+			audioSourceBg.Pause();
+			imageSound.sprite = soundSprites [1];
+		} else{
+			//停止则让他播放
+			audioSourceBg.Play();
+			imageSound.sprite = soundSprites [0];
+		}
+	}
