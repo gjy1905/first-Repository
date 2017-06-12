@@ -13,6 +13,9 @@
 
           //声音的图片是一个数组
           public Sprite[] soundSprites;
+	  
+还要引入命名空间：using UnityEngine.UI;
+		using UnityEngine.SceneManagement;
           
  在start函数里初始化一些方法，但是方法别写在start函数里，保证start函数看起来简洁直观：
   	void Start () {
